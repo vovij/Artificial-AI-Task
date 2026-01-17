@@ -10,7 +10,7 @@ BASE_URL = os.getenv("BASE_URL")
 if not API_KEY or not BASE_URL:
     raise ValueError("Missing required environment variables. Please check your .env file.")
 
-def get_ai_response(ai_context):
+def get_ai_response(ai_context, timeout=60):
     response = requests.post(
         BASE_URL,
         headers={
@@ -21,9 +21,10 @@ def get_ai_response(ai_context):
             "model": "gpt-5-mini-2025-08-07",
             "input": ai_context # full conversation context in the required format
         },
-        timeout=30
+        timeout=timeout
     )
-
+    response.raise_for_status() # raise HTTPError for bad status codes
+    
     return response.json()
 
 
