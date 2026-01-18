@@ -1,5 +1,6 @@
 import time
 from prompts import PLAYER1_SYSTEM_PROMPT, PLAYER2_SYSTEM_PROMPT
+import re
 
 class GameManager:
     """Manages game state, flow, and conversation histories for Twenty Questions game between two players"""
@@ -23,9 +24,11 @@ class GameManager:
             self.history_player2 = [{"role": "system", "content": PLAYER2_SYSTEM_PROMPT}]
 
     def verify_answer(self, answer, secret_object):
-        """Check if a guess matches the secret object"""
+        """Check if secret object appears as a complete word in the answer"""
 
-        return secret_object.lower() in answer.strip().lower()
+        # handle special characters, detect as a whole word only
+        pattern = r'\b' + re.escape(secret_object.lower()) + r'\b' 
+        return bool(re.search(pattern, answer.strip().lower()))
     
     def update_history_with_question(self, question):
         """Update histories after player2 asks a question"""
@@ -48,6 +51,21 @@ class GameManager:
 
         return player1.player_type == "ai" and player2.player_type == "ai"
 
+    def print_player1_win_message(self, secret_object):
+        """Prints player 1 winning message"""
+
+        print("Player 1 wins!")
+        print("Player 2 ran out of questions...")
+        print(f"The secret object was: {secret_object}")
+        return "player1"
+
+    def print_player2_win_message(self, current_question, secret_object):
+        """Prints player 2 winning message"""
+
+        print("Player 2 guessed correctly!")
+        print(f"The secret object was: {secret_object}")
+        print(f"Questions used: {current_question}/{self.question_count}")
+    
     def play_game(self, player1, player2):
         """Main game loop where player2 asks questions to guess player1's object"""
 
@@ -65,9 +83,7 @@ class GameManager:
 
             # check if the guess of player 2 was correct
             if self.verify_answer(question, secret_object):
-                print("Player 2 guessed correctly!")
-                print(f"The secret object was: {secret_object}")
-                print(f"Questions used: {current_question}/{self.question_count}")
+                self.print_player2_win_message(current_question, secret_object)
                 return "player2"
 
             # add delay for AI vs AI mode (responses are too quick sometimes)
@@ -78,6 +94,12 @@ class GameManager:
             answer = player1.answer_question(self.history_player1)
             self.update_history_with_answer(answer)
 
+            # check if the guess of player 2 was correct based on the AI answer 
+            # if there is a small typo/extra letters AI will confirm if the user meant exactly secret object or not
+            if self.verify_answer(answer, secret_object):
+                self.print_player2_win_message(current_question, secret_object)
+                return "player2"
+            
             # Add delay before next question in AI vs AI mode
             if self.is_ai_vs_ai(player1, player2):
                 time.sleep(1)
@@ -85,9 +107,7 @@ class GameManager:
             current_question += 1
 
         # If no questions left, then player 1 wins
-        print("Player 1 wins!")
-        print("Player 2 ran out of questions...")
-        print(f"The secret object was: {secret_object}")
+        self.print_player1_win_message(secret_object)
         return "player1"
     
         # returning player1 or player2 can be used further to evaluate performance for different AI prompts in future implementations

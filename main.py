@@ -15,7 +15,7 @@ def print_welcome_message():
 
 def print_game_modes():
     """Display available game modes"""
-    
+
     print()
     print(" " * 18 + "+" + "-" * 18 + "+")
     print(" " * 18 + "|{:^{w}}|".format("▶▶▶ GAME MODES ◀◀◀", w=18))
@@ -28,7 +28,6 @@ def print_game_modes():
     print()
     print("=" * 57)
     print()
-
 
 if __name__ == "__main__":
     """Main initialization point"""
@@ -61,4 +60,3 @@ if __name__ == "__main__":
         player2 = AIPlayer()
 
     game.play_game(player1, player2)
-
