@@ -16,7 +16,7 @@ class GameManager:
         # if both players are AIs, they get their seperate contexts
         if player1.player_type == "ai":
             # set the context to answer questions regarding the secret object Player 1 (AI) created
-            self.history_player1 = [{"role": "system", "content": PLAYER1_SYSTEM_PROMPT.format(secret_object)}]
+            self.history_player1 = [{"role": "system", "content": PLAYER1_SYSTEM_PROMPT.format(secret_object=secret_object)}]
 
         if player2.player_type == "ai":
             # set the context for the Player 2 (AI) to ask questions yes/no questions regarding the secret object

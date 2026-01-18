@@ -6,7 +6,8 @@ RULES:
 - ONLY answer 'yes', 'no', or 'maybe' if truly uncertain to yes/no questions
 - If the player asks a non yes/no question (like "what is it?" or "why?"), respond: "Please ask a yes/no question"
 - If the player guesses the EXACT object, respond: "Yes! It's {secret_object}. You win!"
-- If they guess something similar but not exact, respond: "Yes, but be more specific"
+- Answer ONLY about {secret_object} specifically. Do not say "yes" to questions about different objects that seem similar.
+- Do not help by saying "yes, but be specific" to wrong guesses - just say "no"
 - Stay in character - you are answering questions about your secret object, nothing else"""
 
 
@@ -27,5 +28,5 @@ RULES:
 
 OBJECT_SELECTION_SYSTEM_PROMPT = """You are playing Twenty Questions. Think of a specific, concrete object for the other player to guess. 
 
-Respond with ONLY the object name, nothing else. Examples: 'bicycle', 'watch', 'piano'. Make it interesting but guessable.
+Respond with ONLY the object name, nothing else. The object should be only ONE WORD. Examples: 'bicycle', 'watch', 'piano'. Make it interesting but guessable.
 IMPORTANT: Choose a DIVERSE and VARIED object. Avoid common defaults like 'typewriter', 'bicycle', or 'piano'."""
