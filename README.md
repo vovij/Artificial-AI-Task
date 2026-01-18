@@ -1,6 +1,6 @@
 # Twenty Questions Game
 
-A Python implementation of the Twenty Questions game with AI integration, allowing human vs AI, AI vs human, and AI vs AI gameplay modes.
+A Python implementation of the Twenty Questions game, allowing human vs AI, AI vs human, and AI vs AI gameplay modes.
 
 ## Overview
 
@@ -23,6 +23,7 @@ twenty-questions/
 ├── players.py           # Player classes (HumanPlayer, AIPlayer)
 ├── api_utils.py         # API utilities
 ├── prompts.py           # System prompts for AI players
+├── requirements.txt     # Python dependencies
 ├── .env.example         # Environment variable template
 ├── .env                 # API credentials (not in repo)
 ├── .gitignore           # Git ignore configuration
@@ -33,13 +34,13 @@ twenty-questions/
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/vovij/Artificial-AI-Task
-cd twenty-questions
+git clone https://github.com/vovij/Twenty-Questions-Game
+cd Twenty-Questions-Game
 ```
 
 2. **Install dependencies**
 ```bash
-pip install requests python-dotenv
+pip install -r requirements.txt
 ```
 
 3. **Create `.env` file**
@@ -66,4 +67,4 @@ Choose a game mode:
 - **Mode 3**: AI vs AI
 
 Enjoy the game! 
-Enter answers or questions when prompted to do so, or just watch 2 AI players play against each other
+Enter answers or questions when prompted to do so, or just watch 2 AI players play against each other.
