@@ -11,6 +11,8 @@ if not API_KEY or not BASE_URL:
     raise ValueError("Missing required environment variables. Please check your .env file.")
 
 def get_ai_response(ai_context, timeout=60):
+    """Send request to AI API and return raw JSON response"""
+
     response = requests.post(
         BASE_URL,
         headers={
@@ -29,6 +31,8 @@ def get_ai_response(ai_context, timeout=60):
 
 
 def format_output_response(input_json):
+    """Extract text content from API response JSON"""
+
     output_text = []
     for item in input_json["output"]:
         if item["type"] == "message":
