@@ -34,16 +34,22 @@ class HumanPlayer(Player):
         """Prompt human player to input a secret object for Player 2 to guess"""
 
         print("=== You are Player 1 ===")
-        secret_object = input("Please enter the object you would like for the Player 2 to guess: ").strip()
-        print(f"Secret object set: {secret_object}")
-        print("The AI (Player 2) will now try to guess it!")
-        return secret_object
+        while True:
+            secret_object = input("Please enter the object you would like for the Player 2 to guess: ").strip()
+            if secret_object:  # checks if string is non-empty
+                print(f"Secret object set: {secret_object}")
+                print("The AI (Player 2) will now try to guess it!")
+                return secret_object
+            print("Object cannot be empty. Please try again.")
 
     def ask_question(self, history, question_number):
         """Prompt human player to input a yes/no question as Player 2"""
 
-        question = input(f"\nQuestion ({question_number}/20): ").strip()
-        return question
+        while True:
+            question = input(f"\nQuestion ({question_number}/20): ").strip()
+            if question:
+                return question
+            print("Question cannot be empty. Please try again.")
 
     def answer_question(self, history):
         """Prompt human player to answer yes/no to a question about their secret object"""
@@ -73,12 +79,13 @@ class AIPlayer(Player):
 
             # basic validation for the AI output (it outputs something reasonable)
             if not secret_object or len(secret_object) > 50:
-                raise ValueError("AI generated invalid object")
+                raise ValueError("AI generated invalid object. Please try again.")
             return secret_object
         
         except Exception as e:
             print(f"There was an error getting object from AI: {e}")
-    
+            raise
+
     def ask_question(self, history, question_number):
         """AI asks a strategic question as Player 2"""
 
@@ -90,6 +97,7 @@ class AIPlayer(Player):
         
         except Exception as e:
             print(f"There was an error getting AI question: {e}")
+            raise 
 
     def answer_question(self, history):
         """AI generates a yes/no answer to a question about its secret object using conversation history"""
@@ -102,3 +110,4 @@ class AIPlayer(Player):
         
         except Exception as e:
             print(f"There was an error getting AI response: {e}")
+            raise

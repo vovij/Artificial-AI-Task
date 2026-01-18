@@ -78,7 +78,7 @@ class GameManager:
 
         while current_question <= self.question_count:
             # player 2 asks a question
-            question = player2.ask_question(self.history_player2, current_question) 
+            question = player2.ask_question(self.history_player2, current_question)            
             self.update_history_with_question(question)
 
             # check if the guess of player 2 was correct
