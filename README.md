@@ -22,7 +22,7 @@ Twenty-Questions-Game/
 ├── game.py              # GameManager class handling game flow
 ├── players.py           # Player classes (HumanPlayer, AIPlayer)
 ├── api_utils.py         # API utilities
-├── prompts.py           # System prompts for AI players
+├── game_config.py       # System prompts and list of secret objects for AI players
 ├── requirements.txt     # Python dependencies
 ├── .env.example         # Environment variable template
 ├── .env                 # API credentials (not in repo)
