@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from api_utils import get_ai_response, format_output_response
-from prompts import OBJECT_SELECTION_SYSTEM_PROMPT
+from game_config import GAME_OBJECTS
+import random
 
 class Player(ABC):
     """Abstract base class for all players, defining the interface for both human and AI players"""
@@ -68,23 +69,13 @@ class AIPlayer(Player):
         super().__init__(player_type)
 
     def think_of_an_object(self):
-        """AI selects a secret object for Player 2 to guess using LLM"""
+        """AI selects a secret object for Player 2 to guess using the object list"""
 
-        # Use a separate context for AI object selection
-        object_selection_context = [{"role": "system", "content": OBJECT_SELECTION_SYSTEM_PROMPT}]
-        try:
-            print("AI thinks of a secret object...")
-            response = get_ai_response(object_selection_context)
-            secret_object = format_output_response(response).strip()
+        print("The game has started! Please start asking questions.")
 
-            # basic validation for the AI output (it outputs something reasonable)
-            if not secret_object or len(secret_object) > 50:
-                raise ValueError("AI generated invalid object. Please try again.")
-            return secret_object
-        
-        except Exception as e:
-            print(f"There was an error getting object from AI: {e}")
-            raise
+        secret_object = random.choice(GAME_OBJECTS)
+        return secret_object
+
 
     def ask_question(self, history, question_number):
         """AI asks a strategic question as Player 2"""
@@ -92,7 +83,7 @@ class AIPlayer(Player):
         try:
             response = get_ai_response(history)
             question = format_output_response(response).strip()
-            print(f"\nAI Question ({question_number}/20): {question}")
+            print(f"\nAI's Question ({question_number}/20): {question}")
             return question
         
         except Exception as e:

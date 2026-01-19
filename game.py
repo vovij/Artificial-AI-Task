@@ -1,5 +1,5 @@
 import time
-from prompts import PLAYER1_SYSTEM_PROMPT, PLAYER2_SYSTEM_PROMPT
+from game_config import PLAYER1_SYSTEM_PROMPT, PLAYER2_SYSTEM_PROMPT
 import re
 
 class GameManager:

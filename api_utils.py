@@ -10,7 +10,7 @@ BASE_URL = os.getenv("BASE_URL")
 if not API_KEY or not BASE_URL:
     raise ValueError("Missing required environment variables. Please check your .env file.")
 
-def get_ai_response(ai_context, timeout=60):
+def get_ai_response(ai_context, timeout=90):
     """Send request to AI API and return raw JSON response"""
 
     response = requests.post(

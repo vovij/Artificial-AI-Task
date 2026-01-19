@@ -17,7 +17,7 @@ The implementation supports three gameplay modes:
 ## Project Structure
 
 ```
-twenty-questions/
+Twenty-Questions-Game/
 ├── main.py              # Entry point and game mode selection
 ├── game.py              # GameManager class handling game flow
 ├── players.py           # Player classes (HumanPlayer, AIPlayer)
