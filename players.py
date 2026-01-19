@@ -72,7 +72,6 @@ class AIPlayer(Player):
         """AI selects a secret object for Player 2 to guess using the object list"""
 
         print("The game has started! Please start asking questions.")
-
         secret_object = random.choice(GAME_OBJECTS)
         return secret_object
 
@@ -94,7 +93,13 @@ class AIPlayer(Player):
         """AI generates a yes/no answer to a question about its secret object using conversation history"""
 
         try:
-            response = get_ai_response(history)
+            # player 1 needs only the system prompt and current question, there is no need for full conversation history
+            # this way less tokens will be used with LLM
+            minimal_context = [
+                history[0],  # system prompt with secret object
+                history[-1] # current question
+                ] 
+            response = get_ai_response(minimal_context)
             answer = format_output_response(response).strip()
             print(f"AI's answer: {answer}")
             return answer
